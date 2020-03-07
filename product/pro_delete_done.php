@@ -3,13 +3,13 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="staff.css">
 </head>
 <body>
 	<?php
 		try {
 
 			$pro_code = $_POST['code'];
+			$pro_image = $_POST['image_name'];
 
 			$dsn = 'mysql:dbname=ec_practice;host=localhost;charset=utf8';
 			$user = 'root';
@@ -23,6 +23,10 @@
 			$stmt -> execute($data);
 
 			$dbh = null;
+
+			if ($pro_image_name != '') {
+				unlink('./image/'.$pro_image_name);
+			}
 
 		} catch (Exception $e) {
 			print 'ただいま通信障害により大変ご迷惑をおかけしています。';

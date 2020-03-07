@@ -3,7 +3,6 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="staff.css">
 </head>
 <body>
 	<?php
@@ -18,15 +17,22 @@
 			$dbh = new PDO($dsn, $user, $password);
 			$dbh -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$sql = 'SELECT name FROM mst_product WHERE code = ?';
+			$sql = 'SELECT name, image FROM mst_product WHERE code = ?';
 			$stmt = $dbh -> prepare($sql);
 			$data[] = $pro_code;
 			$stmt -> execute($data);
 
 			$rec = $stmt -> fetch(PDO::FETCH_ASSOC);
 			$pro_name = $rec['name'];
+			$pro_image_name = $rec['image'];
 
 			$dbh = null;
+
+			if ($pro_image_name == '') {
+				$disp_image = '';
+			}else{
+				$disp_image = '<img style="width: 200px; height: 200px;" src="./image/'.$pro_image_name.'">';
+			}
 
 		} catch (Exception $e) {
 
@@ -47,6 +53,8 @@
 		商品名
 		<?php print $pro_name; ?>
 		<br>
+		<?php print $disp_image; ?>
+		<br>
 		この商品を削除してもよろしいですか?
 		<br>
 	</strong>
@@ -55,6 +63,7 @@
 
 	<form method="post" action="pro_delete_done.php">
 		<input type="hidden" name="code" value="<?php print $pro_code; ?>">
+		<input type="hidden" name="image_name" value="<?php print $pro_image_name; ?>">
 		<input type="button" onclick="history.back()" value="戻る">
 		<input type="submit" value="OK">
 	</form>

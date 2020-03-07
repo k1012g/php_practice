@@ -21,7 +21,7 @@
 
 			$dbh = null;
 
-			print '<strong>スタッフ一覧</strong><br>';
+			print '<strong>商品一覧</strong><br>';
 
 			print '<form method="post" action="pro_branch.php">';
 			while (true) {

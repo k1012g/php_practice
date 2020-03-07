@@ -3,7 +3,6 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="staff.css">
 </head>
 <body>
 	<?php
@@ -18,7 +17,7 @@
 			$dbh = new PDO($dsn, $user, $password);
 			$dbh -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$sql = 'SELECT name,price FROM mst_product WHERE code = ?';
+			$sql = 'SELECT name, price, image FROM mst_product WHERE code = ?';
 			$stmt = $dbh -> prepare($sql);
 			$data[] = $pro_code;
 			$stmt -> execute($data);
@@ -26,8 +25,15 @@
 			$rec = $stmt -> fetch(PDO::FETCH_ASSOC);
 			$pro_name = $rec['name'];
 			$pro_price = $rec['price'];
+			$pro_image_name_old = $rec['image'];
 
 			$dbh = null;
+
+			if ($pro_image_name_old == '') {
+				$disp_image = '';
+			}else{
+				$disp_image = '<img style="width: 200px; height: 200px;" src="./image/'.$pro_image_name_old.'">';
+			}
 
 		} catch (Exception $e) {
 
@@ -46,7 +52,7 @@
 	<br>
 
 
-	<form method="post" action="pro_edit_check.php">
+	<form method="post" action="pro_edit_check.php" enctype="multipart/form-data">
 		<input type="hidden" name="code" value="<?php print $pro_code; ?>">
 
 		<strong>商品名</strong><br>
@@ -55,6 +61,17 @@
 
 		<strong>価格</strong><br>
 		<input type="price" name="price" value="<?php print $pro_price; ?>">
+		<br>
+
+		<input type="hidden" name="image_name_old" value="<?php print $pro_image_name_old; ?>">
+
+		<?php print $disp_image; ?>
+		<br>
+
+		<strong>画像を選択してください</strong>
+		<br>
+
+		<input type="file" name="image">
 		<br>
 
 		<input type="button" onclick="history.back()" value="戻る">

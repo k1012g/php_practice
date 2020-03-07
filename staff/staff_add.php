@@ -3,7 +3,6 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="staff.css">
 </head>
 <body>
 	<form action="staff_add_check.php" method="post">

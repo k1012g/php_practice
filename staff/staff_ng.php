@@ -3,7 +3,6 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="staff.css">
 </head>
 <body>
 	<strong>スタッフが選択されていません。</strong>
