@@ -1,10 +1,12 @@
 <?php
 	try{
-		$staff_code = $_POST['code'];
-		$staff_pass = $_POST['pass'];
 
-		$staff_code = htmlspecialchars($staff_code, ENT_QUOTES, 'UTF-8');
-		$staff_pass = htmlspecialchars($staff_pass, ENT_QUOTES,'UTF-8');
+		require_once('../common/common.php');
+
+		$post = sanitize($_POST);
+
+		$staff_code = $post['code'];
+		$staff_pass = $post['pass'];
 
 		$dsn = 'mysql:dbname=ec_practice;host=localhost;charset=utf8';
 		$user = 'root';
