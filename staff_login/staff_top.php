@@ -19,25 +19,16 @@
 	<meta charset="utf-8">
 </head>
 <body>
-	<strong style="font-size: 35px;">商品追加</strong>
+	<strong>ショップ管理トップ</strong>
 	<br>
 
-	<form action="pro_add_check.php" method="post" enctype="multipart/form-data">
-		<strong>商品名を入力してください</strong>
-		<br>
-		<input type="text" name="name">
-		<br>
+	<a href="../staff/staff_list.php">スタッフ管理</a>
+	<br>
 
-		<strong>価格を入力してください</strong>
-		<br>
+	<a href="../product/pro_list.php">商品管理</a>
+	<br>
 
-		<input type="text" name="price">
-		<br>
-
-		<input type="file" name="image">
-		<br>
-
-		<input type="submit" name="OK">
-	</form>
+	<a href="staff_logout.php">ログアウト</a>
+	<br>
 </body>
 </html>
