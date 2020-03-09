@@ -117,5 +117,8 @@
 		<br>
 		<input type="button" onclick="history.back()" value="戻る">
 	</form>
+
+	<br>
+	<a href="shop_form.html">ご購入手続きへ進む</a>
 </body>
 </html>
