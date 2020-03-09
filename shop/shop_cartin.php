@@ -29,12 +29,16 @@
 			if (isset($_SESSION['cart']) == true) {
 				$cart = $_SESSION['cart'];
 				$qty = $_SESSION['qty'];
-			}else{
-				$cart[] = $pro_code;
-				$qty[] = 1;
-				$_SESSION['cart'] = $cart;
-				$_SESSION['qty'] = $qty;
+				if (in_array($pro_code, $cart) == true) {
+					print 'その商品はすでにカートに入っています。<br>';
+					print '<a href="shop_list.php">商品一覧に戻る</a>';
+					exit();
+				}
 			}
+			$cart[] = $pro_code;
+			$qty[] = 1;
+			$_SESSION['cart'] = $cart;
+			$_SESSION['qty'] = $qty;
 
 		} catch (Exception $e) {
 

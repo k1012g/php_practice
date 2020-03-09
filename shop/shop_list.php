@@ -18,7 +18,7 @@
 <head>
 	<title>Test</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="../css/tyle.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
 	<?php
@@ -30,7 +30,7 @@
 			$dbh = new PDO($dsn, $user, $password);
 			$dbh -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$sql = 'SELECT code,name,price FROM mst_product WHERE 1';
+			$sql = 'SELECT code, name, image, price FROM mst_product WHERE 1';
 			$stmt = $dbh -> prepare($sql);
 			$stmt -> execute();
 
@@ -45,9 +45,18 @@
 					break;
 				}
 
+				$pro_image_name = $rec['image'];
+
+				if ($pro_image_name == ""){
+					$disp_image = "";
+				}else{
+					$disp_image = '<img style="width: 200px; height: 200px;" src="../product/image/'.$pro_image_name.'">';
+				}
+
 				print '<a href="shop_product.php?procode='.$rec['code'].'">';
 				print '<strong>'.$rec['name'].'---';
-				print $rec['price'].'円';
+				print $rec['price'].'円<br>';
+				print $disp_image;
 				print '</a>';
 				print '</strong><br>';
 			}

@@ -24,9 +24,20 @@
 
 		try {
 
-			$cart = $_SESSION['cart'];
-			$qty = $_SESSION['qty'];
-			$max = count($cart);
+			if (isset($_SESSION['cart']) == true) {
+				$cart = $_SESSION['cart'];
+				$qty = $_SESSION['qty'];
+				$max = count($cart);
+			}else{
+				$max = 0;
+			}
+
+			if ($max == 0) {
+				print '<strong>カートは空です。</strong>';
+				print '<br><br>';
+				print '<a href="shop_list.php">商品一覧に戻る</a>';
+				exit();
+			}
 
 			$dsn = 'mysql:dbname=ec_practice;host=localhost;charset=utf8';
 			$user = 'root';
@@ -67,21 +78,42 @@
 	<br>
 
 	<form method="post" action="qty_change.php">
-
-	<?php for ($i = 0; $i < $max; $i++) { ?>
-		<?php print $pro_name[$i]; ?>
-		<!-- <input type="checkbox" name="delete<?php print $i; ?>"> -->
-		<br>
-		<?php print $pro_image[$i].'<br>'; ?>
-		<?php print $pro_price[$i]; ?>円
-		<input type="text" name="qty<?php print $i;?>" value="<?php print $qty[$i]; ?>">個
-		<br>
-		<?php print $pro_price[$i] * $qty[$i]; ?>円
-		<br>
-	<?php } ?>
+		<table border="1">
+			<tr>
+				<td>商品</td>
+				<td></td>
+				<td>価格</td>
+				<td>数量</td>
+				<td>小計</td>
+				<td>削除する</td>
+			</tr>
+			<?php for ($i = 0; $i < $max; $i++) { ?>
+				<tr>
+					<td>
+						<?php print $pro_name[$i]; ?>
+					</td>
+					<td>
+						<?php print $pro_image[$i]; ?>
+					</td>
+					<td>
+						<?php print $pro_price[$i]; ?>円
+					</td>
+					<td>
+						<input type="number" min="1" max="10" name="qty<?php print $i;?>" value="<?php print $qty[$i]; ?>">個
+						<input type="submit" value="数量を変更する">
+					</td>
+					<td>
+						<?php print $pro_price[$i] * $qty[$i]; ?>円
+					</td>
+					<td>
+						<input type="checkbox" name="delete<?php print $i; ?>">
+					</td>
+				</tr>
+			<?php } ?>
+		</table>
 
 		<input type="hidden" name="max" value="<?php print $max; ?>">
-		<input type="submit" value="数量を変更する">
+		<a href="shop_list.php">商品一覧へ</a>
 		<br>
 		<input type="button" onclick="history.back()" value="戻る">
 	</form>
