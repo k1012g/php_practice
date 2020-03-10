@@ -70,6 +70,10 @@
 			$email_body .= $subtotal."円\n";
 		}
 
+		$sql = 'LOCK TABLES data_sales WRITE, data_sales_product WRITE';
+		$stmt = $dbh -> prepare($sql);
+		$stmt -> execute();
+
 		$sql = 'INSERT INTO data_sales (code_member, first_name, second_name, email, postal1, postal2, address, tel) VALUES (?,?,?,?,?,?,?,?)';
 		$stmt = $dbh -> prepare($sql);
 		$data = array();
@@ -100,6 +104,10 @@
 			$stmt -> execute($data);
 
 		}
+
+		$sql = 'UNLOCK TABLES';
+		$stmt = $dbh -> prepare($sql);
+		$stmt -> execute();
 
 		$dbh = null;
 
@@ -138,11 +146,16 @@
 		mb_internal_encoding('UTF-8');
 		mb_send_mail('info@privateselect.co.jp', $email_title, $email_header);
 
+		$cart = array();
+
 
 	} catch (Exception $e) {
 		print 'ただいま通信障害により大変ご迷惑をおかけしています。';
 		exit();
 	}
+
 	?>
+	<br>
+	<a href="shop_list.php">商品一覧へ</a>
 </body>
 </html>
